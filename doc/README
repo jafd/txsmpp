@@ -1,0 +1,44 @@
+This is txSMPP, a SMPPv3.4 protocol implementation for use with the Twisted 
+framework. By itself, it functions as a black hole, but contains hook 
+methods to customize its authorization procedure, add message sources and 
+process received messages.
+
+A possible usage is a SMPP outlet in a multiprotocol message gateway, like in
+a XMPP-to-SMS or a Email-to-SMS solution.
+
+There is also an interface which can be used to bridge the SMPP server/client
+to the data sources. These can be:
+
+— a web form to SMS converter;
+— a polling adbapi solution to pick incoming messages from a database;
+— an email server with SMTP on the other end;
+— an interface to BS, which can make a full-fledged SMSC;
+— a bridge to Kannel the SMS and WAP gateway;
+— you name it.
+
+The SMPP protocol instance has a notion of "channels". By default, there is
+one channel and more can be created. These can be used to limit and prioritize
+the bandwidth, a frequent task for SMPP servers and client.
+
+Adapters are ultimately attached to channels; their priority and bandwidth is
+equalized between every party in that channel.
+
+Messages received by an adapter comply to email interface and are lazily
+decoded to more proper encodings when asked to by email senders (there are
+other methods to use them as SMS proper messages if needed that way).
+
+TODO/IDEAS:
+
+* [M] add v5 support, there is not very much to it, but would be handy.
+* [L] does anyone want CIMD?
+* [L] if a message is not text but an EMS of sorts, it could be decoded to a
+      message with an attachment of a PNG image, a MIDI file or AAC/AMR/WAV/
+      GSM sound file... cool, isn't it?
+* [H] Delivery notifications need their own format. How do we represent them
+      as emails? Delivery receipt RFC?
+* [H] I dunno if a queue broker should be added. This has proven to be a very
+      tricky and demanding thing. Maybe, for now, let's implement very basic
+      routing assumptions (if we are a server, there must be a router to tell
+      which message goes where).
+* [H] It's simple to find out how we channel a client connection. Do we do that
+      per user ID? Maybe another reverse-routing factory is needed... 

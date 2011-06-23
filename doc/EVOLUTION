@@ -1,0 +1,35 @@
+EVOLUTION
+
+1. A connecting client and a listening server
+2. Basic exchange to negotiate mode (rx, tx, transceiver)?
+3. Basic exchange to authenticate?
+   Always pass, always deny, tie to cred
+4. Error handling and timeouts (incorrect payloads, etc)
+5. Receive messages, don't encode/decode, that can be done later
+   Probably can be tested with Kannel?
+6. Send messages, already encoded ones.
+   Test with the receiver and probably Kannel
+
+All messages can be done over one channel, no bandwidth implementation
+for now.
+
+7. email <-> SMS enhanced email converter. No reverse conversion needed 
+   because the enhanced implementation supports everything in SMS.
+8. Define the bridging interface.
+9. Implement bandwidth control.
+
+Now maybe implement some filtering interface. For example, it could check if
+a message is allowed to pass through or the credit is up. Add an ability to
+hook it to a channel.
+	Maybe a channel can be attached to another channel. Each client connection
+	could be assigned a channel to which its own checker can be assigned. All
+	these channels go to the master channel?
+	
+This is getting really hairy now. Maybe split step 9 in more steps...
+
+10. A bridge example between some database storage and SMPP client/server.
+
+11. Another example to, say, send messages to Gmail. Test images/sounds there.
+Images can be converted to GIF/PNG with a notion of original format.
+
+It's interested how MMS are sent. MMS are almost-email, after all...
